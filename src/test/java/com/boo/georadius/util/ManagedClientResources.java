@@ -7,12 +7,7 @@ import io.lettuce.core.resource.DefaultClientResources;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * Utility to keep track of a single {@link ClientResources} instance used from test rules to prevent costly
- * creation/disposal of threading resources.
- *
- * @author Mark Paluch
- */
+
 class ManagedClientResources {
 
     private static final ManagedClientResources instance = new ManagedClientResources();

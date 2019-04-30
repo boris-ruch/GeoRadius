@@ -2,10 +2,10 @@ package com.boo.georadius;
 
 
 import com.boo.georadius.util.RequiresRedisServer;
-import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.geo.Circle;
@@ -16,20 +16,20 @@ import org.springframework.data.redis.connection.RedisGeoCommands.DistanceUnit;
 import org.springframework.data.redis.connection.RedisGeoCommands.GeoLocation;
 import org.springframework.data.redis.core.GeoOperations;
 import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class GeoOperationsTests {
 
     // we only want to run this tests when redis is up an running
     @ClassRule
-    public static RequiresRedisServer requiresServer = RequiresRedisServer.onLocalhost().atLeast("3.2");
+    public static RequiresRedisServer requiresServer = RequiresRedisServer.onLocalhost().atLeast("5.0");
 
     @Autowired
     private RedisOperations<String, String> operations;
@@ -38,7 +38,7 @@ public class GeoOperationsTests {
 
     private Point thalwil = new Point(47.296143, 8.565117);
 
-    @Before
+    @BeforeEach
     public void before() {
 
         geoOperations = operations.opsForGeo();
@@ -86,5 +86,5 @@ public class GeoOperationsTests {
 
         assertThat(geohashes).hasSize(2).contains("t198sr0p2j0", "t198st0pfs0");
     }
-    
+
 }

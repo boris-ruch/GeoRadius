@@ -19,16 +19,13 @@ import org.springframework.util.StringUtils;
 /**
  * Implementation of junit rule {@link ExternalResource} to verify Redis (or at least something on the defined host and
  * port) is up and running. Allows optionally to require a specific Redis version.
- *
- * @author Christoph Strobl
- * @author Mark Paluch
  */
 public class RequiresRedisServer extends ExternalResource {
 
     public static final Version NO_VERSION = Version.parse("0.0.0");
 
     private int timeout = 30;
-    private Version requiredVersion = NO_VERSION;
+    private Version requiredVersion;
 
     private final String host;
     private final int port;
@@ -82,7 +79,7 @@ public class RequiresRedisServer extends ExternalResource {
      * @see org.junit.rules.ExternalResource#before()
      */
     @Override
-    protected void before() throws Throwable {
+    protected void before()  {
 
         try (Socket socket = new Socket()) {
             socket.setTcpNoDelay(true);
